@@ -11,6 +11,16 @@ export async function GET(request: NextRequest) {
 
   // check if we got a code and state
   if (!code || !state) {
+    // check for errors
+    const error = request.nextUrl.searchParams.get("error");
+
+    if (error) {
+      // like access_denied
+      return new Response("Error: " + error, {
+        status: 400,
+      });
+    }
+
     return new Response("Missing code or state", {
       status: 400,
     });
