@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { FaUserSlash } from "react-icons/fa6";
 
-import { EmptyState, VStack } from "@chakra-ui/react";
+import { EmptyState, Icon, VStack } from "@chakra-ui/react";
 
 enum Error {
   AccessDenied = "AccessDenied",
@@ -12,7 +12,7 @@ enum Error {
 
 const errorMap = {
   [Error.AccessDenied]:
-    "Access denied. You need to authorize this application.",
+    "Access denied. You need to authorize this application to proceed.",
   [Error.InvalidRequest]: "Invalid request. Please try again.",
 };
 
@@ -24,7 +24,9 @@ export default function AuthErrorPage() {
     <EmptyState.Root size="lg">
       <EmptyState.Content>
         <EmptyState.Indicator>
-          <FaUserSlash />
+          <Icon>
+            <FaUserSlash />
+          </Icon>
         </EmptyState.Indicator>
         <VStack textAlign="center">
           <EmptyState.Title>There was a problem during login</EmptyState.Title>

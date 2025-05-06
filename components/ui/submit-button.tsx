@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 
-import { Button, ConditionalValue } from "@chakra-ui/react";
+import { Button, ConditionalValue, Icon, Span } from "@chakra-ui/react";
 
 export default function SubmitButton({
   icon,
@@ -30,8 +30,8 @@ export default function SubmitButton({
       variant={variant}
       colorPalette={colorPalette}
     >
-      {icon}
-      {text}
+      <Icon>{icon}</Icon>
+      <Span>{text}</Span>
     </Button>
   );
 }

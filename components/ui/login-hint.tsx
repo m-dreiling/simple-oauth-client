@@ -1,13 +1,15 @@
 import { FaUserSecret } from "react-icons/fa6";
 
-import { EmptyState, VStack } from "@chakra-ui/react";
+import { EmptyState, Icon, VStack } from "@chakra-ui/react";
 
 export default function LoginHint() {
   return (
     <EmptyState.Root size="lg">
       <EmptyState.Content>
         <EmptyState.Indicator>
-          <FaUserSecret />
+          <Icon>
+            <FaUserSecret />
+          </Icon>
         </EmptyState.Indicator>
         <VStack textAlign="center">
           <EmptyState.Title>You are not logged in</EmptyState.Title>
