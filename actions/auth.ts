@@ -4,13 +4,19 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { encryptState } from "@/lib/state";
+
 export async function signIn() {
   // Generate a random state
   const state = crypto.randomUUID();
 
+  // Encrypt the state because it will be sent to the client
+  // and then sent back to us by GitHub
+  const encryptedState = await encryptState({ state });
+
   // Set the state as a cookie
   const cookieStore = await cookies();
-  cookieStore.set("state", state, {
+  cookieStore.set("state", encryptedState, {
     httpOnly: true,
     secure: true,
     maxAge: 10 * 60, // 10 minutes

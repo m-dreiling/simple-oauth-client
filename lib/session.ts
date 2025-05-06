@@ -13,7 +13,7 @@ export type SessionPayload = {
   location: string;
 };
 
-export async function encrypt(payload: SessionPayload) {
+export async function encryptSession(payload: SessionPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -21,7 +21,7 @@ export async function encrypt(payload: SessionPayload) {
     .sign(encodedKey);
 }
 
-export async function decrypt(
+export async function decryptSession(
   session: string | undefined = ""
 ): Promise<(JWTPayload & SessionPayload) | null> {
   try {
@@ -36,7 +36,7 @@ export async function decrypt(
 }
 
 export async function createSession(payload: SessionPayload) {
-  const session = await encrypt(payload);
+  const session = await encryptSession(payload);
   const cookieStore = await cookies();
 
   cookieStore.set("session", session, {
@@ -56,7 +56,7 @@ export async function getSession() {
     return null;
   }
 
-  return decrypt(session.value);
+  return decryptSession(session.value);
 }
 
 export async function deleteSession() {

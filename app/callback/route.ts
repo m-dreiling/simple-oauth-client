@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
 import { createSession } from "@/lib/session";
+import { decryptState } from "@/lib/state";
 
 export async function GET(request: NextRequest) {
   // get the code and state from the query params
@@ -30,11 +31,26 @@ export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
   const stateCookie = cookieStore.get("state");
 
+  // check if we have a state cookie
+  if (!stateCookie?.value) {
+    // if we don't have a state cookie, redirect to the auth error page
+    redirect("/auth-error?error=InvalidRequest");
+  }
+
   // delete the state cookie
   cookieStore.delete("state");
 
-  // check the state cookie
-  if (!stateCookie?.value || state !== stateCookie.value) {
+  // decrypt the state cookie
+  // using a encrypted state cookie to prevents users from brute forcing the code when they can set the state
+  const decryptedState = await decryptState(stateCookie.value);
+
+  // check if the state cookie is valid
+  if (
+    !decryptedState ||
+    !decryptedState?.state ||
+    decryptedState.state !== state
+  ) {
+    // if the state cookie is invalid, redirect to the auth error page
     redirect("/auth-error?error=InvalidRequest");
   }
 
