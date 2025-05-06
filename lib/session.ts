@@ -9,7 +9,7 @@ const encodedKey = new TextEncoder().encode(secretKey);
 export type SessionPayload = {
   id: string;
   name: string;
-  avatar_url: string;
+  avatarUrl: string;
   location: string;
 };
 

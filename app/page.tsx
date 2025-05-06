@@ -1,26 +1,19 @@
-import { FaUserSecret } from "react-icons/fa";
-
+import LoginHint from "@/components/ui/login-hint";
+import UserInfo from "@/components/ui/user-info";
 import { getSession } from "@/lib/session";
-import { EmptyState, VStack } from "@chakra-ui/react";
 
 export default async function Home() {
   const session = await getSession();
 
-  console.log("session", session);
+  if (session) {
+    return (
+      <UserInfo
+        name={session.name}
+        avatarUrl={session.avatarUrl}
+        location={session.location}
+      />
+    );
+  }
 
-  return (
-    <EmptyState.Root size="lg">
-      <EmptyState.Content>
-        <EmptyState.Indicator>
-          <FaUserSecret />
-        </EmptyState.Indicator>
-        <VStack textAlign="center">
-          <EmptyState.Title>You are not logged in</EmptyState.Title>
-          <EmptyState.Description>
-            Please log in to access this application.
-          </EmptyState.Description>
-        </VStack>
-      </EmptyState.Content>
-    </EmptyState.Root>
-  );
+  return <LoginHint />;
 }

@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
   await createSession({
     id: user.id,
     name: user.name,
-    avatar_url: user.avatar_url,
+    avatarUrl: user.avatar_url,
     location: user.location,
   });
   // redirect to the home page

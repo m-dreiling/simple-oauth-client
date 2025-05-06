@@ -4,7 +4,7 @@ import { FaUserLock } from "react-icons/fa";
 import AuthButton from "@/components/ui/auth-button";
 import { Box, Container, Flex, Link as ChakraLink } from "@chakra-ui/react";
 
-export default async function Header() {
+export default function Header() {
   return (
     <Box
       as="header"
