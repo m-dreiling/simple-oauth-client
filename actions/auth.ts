@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -28,5 +29,5 @@ export async function signOut() {
   const cookieStore = await cookies();
   cookieStore.delete("session");
   cookieStore.delete("state"); // should be deleted in the callback route, but just in case
-  redirect("/");
+  revalidatePath("/"); // revalidate the root path to update everything including the header
 }
