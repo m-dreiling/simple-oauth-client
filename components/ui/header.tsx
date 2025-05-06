@@ -45,7 +45,9 @@ export default function Header() {
               </VStack>
             </Link>
           </ChakraLink>
-          <AuthButton />
+          <Box _print={{ display: "none" }}>
+            <AuthButton />
+          </Box>
         </Flex>
       </Container>
     </Box>
