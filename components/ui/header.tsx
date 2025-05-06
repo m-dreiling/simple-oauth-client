@@ -2,7 +2,14 @@ import Link from "next/link";
 import { FaUserLock } from "react-icons/fa";
 
 import AuthButton from "@/components/ui/auth-button";
-import { Box, Container, Flex, Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Icon,
+  Link as ChakraLink,
+  Span,
+} from "@chakra-ui/react";
 
 export default function Header() {
   return (
@@ -17,7 +24,7 @@ export default function Header() {
       _print={{ display: "none" }}
     >
       <Container>
-        <Flex alignItems="center" justify="space-between" py={3}>
+        <Flex alignItems="center" justify="space-between" gap={3} py={3}>
           <ChakraLink
             asChild
             title="Go to home page"
@@ -25,8 +32,10 @@ export default function Header() {
             fontWeight="bold"
           >
             <Link href="/" draggable={false}>
-              <FaUserLock />
-              Simple OAuth Client
+              <Icon>
+                <FaUserLock />
+              </Icon>
+              <Span hideBelow="sm">Simple OAuth 2.0 Client</Span>
             </Link>
           </ChakraLink>
           <AuthButton />

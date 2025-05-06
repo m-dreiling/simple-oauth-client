@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Simple OAuth Client",
+  title: "Simple OAut 2.0 Client",
 };
 
 export default function RootLayout({
