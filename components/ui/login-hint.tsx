@@ -1,4 +1,4 @@
-import { FaUserSecret } from "react-icons/fa";
+import { FaUserSecret } from "react-icons/fa6";
 
 import { EmptyState, VStack } from "@chakra-ui/react";
 

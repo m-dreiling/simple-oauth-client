@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaUserLock } from "react-icons/fa";
+import { FaUserLock } from "react-icons/fa6";
 
 import AuthButton from "@/components/ui/auth-button";
 import {

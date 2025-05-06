@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { FaUserLock } from "react-icons/fa";
+import { FaUserLock } from "react-icons/fa6";
 
 // Image metadata
 export const size = {

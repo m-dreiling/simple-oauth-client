@@ -1,5 +1,4 @@
-import { FaGithub } from "react-icons/fa";
-import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { FaArrowRightFromBracket, FaGithub } from "react-icons/fa6";
 
 import { signIn, signOut } from "@/actions/auth";
 import SubmitButton from "@/components/ui/submit-button";
@@ -13,8 +12,8 @@ export default async function AuthButton() {
       <form action={signOut}>
         <SubmitButton
           icon={<FaArrowRightFromBracket />}
-          text="Sign out"
-          loadingText="Signing out..."
+          text="Log out"
+          loadingText="Logging out..."
           variant="subtle"
           colorPalette="red"
         />
@@ -26,8 +25,8 @@ export default async function AuthButton() {
     <form action={signIn}>
       <SubmitButton
         icon={<FaGithub />}
-        text="Sign in with GitHub"
-        loadingText="Signing in..."
+        text="Log in with GitHub"
+        loadingText="Logging in..."
         variant="solid"
       />
     </form>

@@ -4,7 +4,6 @@ import { NextRequest } from "next/server";
 
 import { createSession } from "@/lib/session";
 
-// in a real app, we would redirect the user instead of returning a response in the invalid states
 export async function GET(request: NextRequest) {
   // get the code and state from the query params
   const code = request.nextUrl.searchParams.get("code");
@@ -16,15 +15,15 @@ export async function GET(request: NextRequest) {
     const error = request.nextUrl.searchParams.get("error");
 
     if (error) {
-      // like access_denied
-      return new Response("Error: " + error, {
-        status: 400,
-      });
+      // check if the error is access denied
+      // this is the case when the user denies the authorization
+      if (error === "access_denied") {
+        redirect("/auth-error?error=AccessDenied");
+      }
     }
 
-    return new Response("Missing code or state", {
-      status: 400,
-    });
+    // if we don't have a code or state, redirect to the auth error page
+    redirect("/auth-error?error=InvalidRequest");
   }
 
   // check if the state is valid
@@ -36,9 +35,7 @@ export async function GET(request: NextRequest) {
 
   // check the state cookie
   if (!stateCookie?.value || state !== stateCookie.value) {
-    return new Response("Invalid state", {
-      status: 400,
-    });
+    redirect("/auth-error?error=InvalidRequest");
   }
 
   // use the code to get the access token in JSON format
@@ -65,9 +62,7 @@ export async function GET(request: NextRequest) {
   // check if we got an access token
   if (!data.access_token) {
     // the main reason for this is that the code is invalid, used, or expired
-    return new Response("Error getting access token", {
-      status: 400,
-    });
+    redirect("/auth-error?error=InvalidRequest");
   }
 
   // use the access token to get the user info
@@ -79,9 +74,7 @@ export async function GET(request: NextRequest) {
 
   // check if we got a user with the required fields
   if (!(user?.id && user?.name && user?.avatar_url && user?.location)) {
-    return new Response("Error getting user info", {
-      status: 400,
-    });
+    redirect("/auth-error?error=InvalidRequest");
   }
 
   // create a session for the user
