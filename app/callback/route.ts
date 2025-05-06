@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 
 import { createSession } from "@/lib/session";
 
+// in a real app, we would redirect the user instead of returning a response in the invalid states
 export async function GET(request: NextRequest) {
   // get the code and state from the query params
   const code = request.nextUrl.searchParams.get("code");
@@ -47,7 +48,7 @@ export async function GET(request: NextRequest) {
   const tokenUrl = "https://github.com/login/oauth/access_token";
 
   // error handling omitted for brevity
-  const response = await fetch(tokenUrl, {
+  const data = await fetch(tokenUrl, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -59,15 +60,7 @@ export async function GET(request: NextRequest) {
       code,
       redirect_uri: process.env.REDIRECT_URI,
     }),
-  });
-
-  if (!response.ok) {
-    return new Response("Failed to get access token", {
-      status: 500,
-    });
-  }
-
-  const data = await response.json();
+  }).then(async (res) => await res.json());
 
   // check if we got an access token
   if (!data.access_token) {
