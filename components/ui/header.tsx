@@ -22,7 +22,6 @@ export default function Header() {
       zIndex={1}
       bg="bg"
       borderBottomWidth={1}
-      _print={{ display: "none" }}
     >
       <Container>
         <Flex alignItems="center" justify="space-between" gap={3} py={3}>

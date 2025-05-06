@@ -29,7 +29,7 @@ export default function UserInfo({
             <Icon>
               <FaLocationDot />
             </Icon>
-            <Span aria-label="Location" lineHeight="shorter">
+            <Span aria-label="Location" lineHeight="1">
               {location}
             </Span>
           </HStack>
