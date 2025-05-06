@@ -9,6 +9,7 @@ import {
   Icon,
   Link as ChakraLink,
   Span,
+  VStack,
 } from "@chakra-ui/react";
 
 export default function Header() {
@@ -25,17 +26,24 @@ export default function Header() {
     >
       <Container>
         <Flex alignItems="center" justify="space-between" gap={3} py={3}>
-          <ChakraLink
-            asChild
-            title="Go to home page"
-            fontSize="2xl"
-            fontWeight="bold"
-          >
+          <ChakraLink asChild title="Go to home page">
             <Link href="/" draggable={false}>
-              <Icon>
+              <Icon fontSize="2xl" fontWeight="bold">
                 <FaUserLock />
               </Icon>
-              <Span hideBelow="sm">Simple OAuth 2.0 Client</Span>
+              <VStack gap={0} align="start" ml={2} hideBelow="sm">
+                <Span
+                  hideBelow="sm"
+                  lineHeight="shorter"
+                  fontSize="2xl"
+                  fontWeight="bold"
+                >
+                  Simple OAuth 2.0 Client
+                </Span>
+                <Span lineHeight="shorter" color="fg.muted" fontSize="xs">
+                  &copy; {new Date().getFullYear()} Manuel Dreiling
+                </Span>
+              </VStack>
             </Link>
           </ChakraLink>
           <AuthButton />
