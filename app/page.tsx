@@ -2,7 +2,7 @@ import LoginHint from "@/components/ui/login-hint";
 import UserInfo from "@/components/ui/user-info";
 import { getSession } from "@/lib/session";
 
-export default async function Home() {
+export default async function HomePage() {
   const session = await getSession();
 
   if (session) {
