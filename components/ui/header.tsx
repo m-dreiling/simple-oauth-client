@@ -39,7 +39,12 @@ export default function Header() {
                 >
                   Simple OAuth 2.0 Client
                 </Span>
-                <Span lineHeight="shorter" color="fg.muted" fontSize="xs">
+                <Span
+                  lineHeight="shorter"
+                  color="fg.muted"
+                  fontSize="xs"
+                  lang="de"
+                >
                   &copy; {new Date().getFullYear()} Manuel Dreiling
                 </Span>
               </VStack>

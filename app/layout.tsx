@@ -12,6 +12,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Simple OAuth 2.0 Client",
+  description: "A simple OAuth 2.0 client to demonstrate the OAuth 2.0 flow.",
 };
 
 export default function RootLayout({
