@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { FaUserLock } from "react-icons/fa";
 
-import { signIn } from "@/actions/auth";
-import LoginButton from "@/components/ui/login-button";
+import AuthButton from "@/components/ui/auth-button";
 import { Box, Container, Flex, Link as ChakraLink } from "@chakra-ui/react";
 
 export default async function Header() {
@@ -30,9 +29,7 @@ export default async function Header() {
               Simple OAuth Client
             </Link>
           </ChakraLink>
-          <form action={signIn}>
-            <LoginButton />
-          </form>
+          <AuthButton />
         </Flex>
       </Container>
     </Box>
