@@ -1,5 +1,8 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
+
+import { createSession } from "@/lib/session";
 
 export async function GET(request: NextRequest) {
   // get the code and state from the query params
@@ -17,6 +20,10 @@ export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
   const stateCookie = cookieStore.get("state");
 
+  // delete the state cookie
+  cookieStore.delete("state");
+
+  // check the state cookie
   if (!stateCookie?.value || state !== stateCookie.value) {
     return new Response("Invalid state", {
       status: 400,
@@ -29,6 +36,7 @@ export async function GET(request: NextRequest) {
 
   const tokenUrl = "https://github.com/login/oauth/access_token";
 
+  // error handling omitted for brevity
   const response = await fetch(tokenUrl, {
     method: "POST",
     headers: {
@@ -39,11 +47,11 @@ export async function GET(request: NextRequest) {
       client_id: clientId,
       client_secret: clientSecret,
       code,
+      redirect_uri: process.env.REDIRECT_URI,
     }),
   });
 
   if (!response.ok) {
-    console.error("Failed to get access token:", response.statusText);
     return new Response("Failed to get access token", {
       status: 500,
     });
@@ -58,4 +66,28 @@ export async function GET(request: NextRequest) {
       status: 400,
     });
   }
+
+  // use the access token to get the user info
+  const user = await fetch("https://api.github.com/user", {
+    headers: {
+      Authorization: `Bearer ${data.access_token}`,
+    },
+  }).then(async (res) => await res.json());
+
+  // check if we got a user with the required fields
+  if (!(user?.id && user?.name && user?.avatar_url && user?.location)) {
+    return new Response("Error getting user info", {
+      status: 400,
+    });
+  }
+
+  // create a session for the user
+  await createSession({
+    id: user.id,
+    name: user.name,
+    avatar_url: user.avatar_url,
+    location: user.location,
+  });
+  // redirect to the home page
+  redirect("/");
 }

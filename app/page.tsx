@@ -1,8 +1,13 @@
 import { FaUserSecret } from "react-icons/fa";
 
+import { getSession } from "@/lib/session";
 import { EmptyState, VStack } from "@chakra-ui/react";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getSession();
+
+  console.log("session", session);
+
   return (
     <EmptyState.Root size="lg">
       <EmptyState.Content>

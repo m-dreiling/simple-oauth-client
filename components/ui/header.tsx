@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { FaUserLock } from "react-icons/fa";
 
-import { signIn } from "@/actions/actions";
+import { signIn } from "@/actions/auth";
+import LoginButton from "@/components/ui/login-button";
 import { Box, Container, Flex, Link as ChakraLink } from "@chakra-ui/react";
-
-import LoginButton from "./login-button";
 
 export default async function Header() {
   return (
