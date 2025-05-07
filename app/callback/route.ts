@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
-import { createSession } from "@/lib/session";
 import { decryptState } from "@/lib/state";
 
 export async function GET(request: NextRequest) {
@@ -75,31 +74,18 @@ export async function GET(request: NextRequest) {
     }),
   }).then(async (res) => await res.json());
 
-  // check if we got an access token
-  if (!data.access_token) {
-    // the main reason for this is that the code is invalid, used, or expired
-    redirect("/auth-error?error=InvalidRequest");
-  }
+  // only return one half of the token for the demo
+  data.access_token = data.access_token.substring(
+    0,
+    data.access_token.length / 2
+  );
 
-  // use the access token to get the user info
-  const user = await fetch("https://api.github.com/user", {
+  // return the access token
+  return new Response(JSON.stringify(data), {
+    status: 200,
     headers: {
-      Authorization: `Bearer ${data.access_token}`,
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
     },
-  }).then(async (res) => await res.json());
-
-  // check if we got a user with the required fields
-  if (!(user?.id && user?.name && user?.avatar_url && user?.location)) {
-    redirect("/auth-error?error=InvalidRequest");
-  }
-
-  // create a session for the user
-  await createSession({
-    id: user.id,
-    name: user.name,
-    avatarUrl: user.avatar_url,
-    location: user.location,
   });
-  // redirect to the home page
-  redirect("/");
 }
