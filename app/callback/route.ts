@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
-import { createSession } from "@/lib/session";
 import { decryptState } from "@/lib/state";
 
 export async function GET(request: NextRequest) {
@@ -88,18 +87,11 @@ export async function GET(request: NextRequest) {
     },
   }).then(async (res) => await res.json());
 
-  // check if we got a user with the required fields
-  if (!(user?.id && user?.name && user?.avatar_url && user?.location)) {
-    redirect("/auth-error?error=InvalidRequest");
-  }
-
-  // create a session for the user
-  await createSession({
-    id: user.id,
-    name: user.name,
-    avatarUrl: user.avatar_url,
-    location: user.location,
+  // return the user json
+  return new Response(JSON.stringify(user), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
-  // redirect to the home page
-  redirect("/");
 }
