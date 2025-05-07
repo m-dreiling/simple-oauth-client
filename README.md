@@ -1,5 +1,7 @@
 # Simple OAuth2.0 client
 
+&copy; 2025 Manuel Dreiling
+
 ## Required environment variables
 
 ```
