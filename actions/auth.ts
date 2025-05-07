@@ -27,6 +27,7 @@ export async function signIn() {
   const clientId = process.env.CLIENT_ID;
   const scope = ""; // + everything that is public anyway
   const redirectUri = process.env.REDIRECT_URI;
+  // the prompt=consent is used to force the authorization screen to show up every time for the purpose of this demo
   const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scope}&state=${state}&redirect_uri=${redirectUri}&prompt=consent`;
   redirect(authUrl);
 }
