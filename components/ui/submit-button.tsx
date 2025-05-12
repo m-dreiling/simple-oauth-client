@@ -1,3 +1,5 @@
+import { FaXmark } from 'react-icons/fa6';
+
 import {
   Button,
   ConditionalValue,
@@ -46,7 +48,12 @@ export default function SubmitButton({
             <Dialog.Body>This feature is not implemented yet.</Dialog.Body>
             <Dialog.Footer>
               <Dialog.ActionTrigger asChild>
-                <Button>Close</Button>
+                <Button>
+                  <Icon>
+                    <FaXmark />
+                  </Icon>
+                  <Span>Close</Span>
+                </Button>
               </Dialog.ActionTrigger>
             </Dialog.Footer>
           </Dialog.Content>
