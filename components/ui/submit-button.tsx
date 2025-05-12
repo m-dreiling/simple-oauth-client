@@ -1,8 +1,11 @@
-"use client";
-
-import { useFormStatus } from "react-dom";
-
-import { Button, ConditionalValue, Icon, Span } from "@chakra-ui/react";
+import {
+  Button,
+  ConditionalValue,
+  Dialog,
+  Icon,
+  Portal,
+  Span,
+} from '@chakra-ui/react';
 
 export default function SubmitButton({
   icon,
@@ -19,19 +22,36 @@ export default function SubmitButton({
   >;
   colorPalette?: ConditionalValue<"red">;
 }>) {
-  const { pending } = useFormStatus();
-
   return (
-    <Button
-      type="submit"
-      loading={pending}
-      loadingText={loadingText}
-      spinnerPlacement="start"
-      variant={variant}
-      colorPalette={colorPalette}
-    >
-      <Icon>{icon}</Icon>
-      <Span>{text}</Span>
-    </Button>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button
+          type="submit"
+          loadingText={loadingText}
+          spinnerPlacement="start"
+          variant={variant}
+          colorPalette={colorPalette}
+        >
+          <Icon>{icon}</Icon>
+          <Span>{text}</Span>
+        </Button>
+      </Dialog.Trigger>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>Not implemented!</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Body>This feature is not implemented yet.</Dialog.Body>
+            <Dialog.Footer>
+              <Dialog.ActionTrigger asChild>
+                <Button>Close</Button>
+              </Dialog.ActionTrigger>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 }
