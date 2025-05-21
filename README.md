@@ -2,6 +2,10 @@
 
 &copy; 2025 Manuel Dreiling
 
+> [!IMPORTANT]
+>
+> This project was created for a quick demo during a presentation. It has served its purpose and is not further maintained. It is not recommended to use this code in production.
+
 ## Required environment variables
 
 ```
