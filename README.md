@@ -29,6 +29,25 @@ npm install
 npm run dev
 ```
 
+### GitHub CodeSpaces
+
+To run the app in GitHub CodeSpaces, you need to set the GitHub URL as the `REDIRECT_URI` and as an allowed origin in `next.config.ts`:
+
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ["@chakra-ui/react"],
+    serverActions: {
+      allowedOrigins: ["https://something.github.dev", "localhost:3000"],
+    },
+  },
+};
+
+export default nextConfig;
+```
+
 ## Test the app
 
 1. Open your browser and go to [localhost:3000](http://localhost:3000)
